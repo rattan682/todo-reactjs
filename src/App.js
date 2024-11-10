@@ -1,57 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import { useEffect, useRef, useState } from "react";
+import "./App.css";
+import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
+import { Newtodo } from "./Newtodo";
 
 function App() {
+  const containerRef = useRef();
+
+  const data=useSelector(state=>state.todo)
+  // const dispatch=useDispatch()
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <>
+      <div className="w-[100vw] h-[100vh] relative bg-[#E4E0E1]">
+        <div className="w-full h-full flex justify-center items-center">
+          <h1 className="text-[#493628] text-[80px] md:text-[100px] lg:text-[150px]">Docs.</h1>
+        </div>
+        <div
+          ref={containerRef}
+          className="absolute grid grid-cols-6 gap-4 p-10 inset-0 overflow-auto"
+        >
+          {data?.map((e, i) => (
+            <Card data={e} text={e.text} delid={e.id} key={i} dragConstraints={containerRef} />
+          ))}
+          <Newtodo dragConstraints={containerRef}/>
+        </div>
+      </div>
+    </>
   );
 }
 
